@@ -1,0 +1,59 @@
+﻿@page "/"
+@using ContactsBlazorWebApp.Models
+@using ContactsBlazorWebApp.Services
+@inject ContactsRepository _repo
+@inject NavigationManager _nav
+
+<PageTitle>Home</PageTitle>
+
+<h1>Contacts!</h1>
+
+<table class="table table-bordered border-primary">
+	<thead>
+		<tr class="text-dark">
+			<td>Name</td>
+			<td>Email</td>
+			<td>Phone</td>
+			<td>Date Of Birth</td>
+			<td>Edit Contact</td>
+			<td>Remove Contact</td>
+			<td>
+				<button class="btn-close-white" @onclick='()=>_nav.NavigateTo("/Addcontact")'>Add Contact</button>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach(var contact in contacts)
+		{
+			var localval = contact;
+			<tr>
+				<td>@contact.Name</td>
+				<td>@contact.Email</td>
+				<td>@contact.Phone</td>
+				<td>@contact.DateOfBirth</td>
+				<td>
+					<button type="button">Edit</button>
+				</td>
+				<td>
+					<button type="button" @onclick="(async () => await DeleteContactasync(contact))">Delete</button>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+@code{
+	private List<ContactDetail> contacts = new List<ContactDetail>();
+	protected override void OnInitialized()
+	{
+		contacts = _repo.GetContactDetails();
+	}
+	private async Task DeleteContactasync(ContactDetail contact)
+	{
+		await _repo.DeleteContact(contact);
+		contacts = _repo.GetContactDetails();
+		StateHasChanged();
+	}
+
+}
+

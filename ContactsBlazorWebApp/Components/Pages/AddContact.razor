@@ -1,0 +1,44 @@
+﻿@page "/Addcontact"
+@inject ContactsRepository _repo
+@inject NavigationManager _nav
+
+<h3>AddContact</h3>
+
+<EditForm Model="contact" OnSubmit="Submit" FormName="AddContact">
+	<div>
+        Name:
+        <InputText @bind-Value="contact.Name"></InputText>
+    </div>
+    <div>
+        Phone:
+        <InputText @bind-Value="contact.Phone"></InputText>
+    </div>
+    <div>
+        Date Of Birth:
+        <InputDate @bind-Value="contact.DateOfBirth"></InputDate>
+    </div>
+    <div>
+        Email:
+        <InputText @bind-Value="contact.Email"></InputText>
+    </div>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+   
+
+</EditForm>
+
+@code {
+    public  AddNewContact contact { get; set; }
+    private void Submit() 
+    {
+        _repo.AddContact(contact);
+        _nav.NavigateTo("/");
+
+    }
+    protected override void OnInitialized() => contact ??= new()
+    {
+        Name=string.Empty
+    };
+
+}

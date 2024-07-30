@@ -1,0 +1,28 @@
+﻿@page "/weather"
+@attribute [StreamRendering]
+@using System.Diagnostics
+
+@foreach (var todo in Todos)
+{
+    <p>@todo.Text</p>
+    <button @onclick="() => Delete(todo)">X</button>
+}
+
+@code {
+    List<Todo> Todos { get; set; } = new List<Todo>
+    {
+        new Todo {Id = 1, Text = "Do this"},
+        new Todo {Id = 2, Text = "And this"}
+    };
+
+    void Delete(Todo todo)
+    {
+        Console.WriteLine($"Deleting {todo.Id}");
+    }
+
+    private class Todo
+    {
+        public int Id { get; set; }
+        public string Text { get; set; }
+    }
+}
