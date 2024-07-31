@@ -25,13 +25,13 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish -c Release -o myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          path: myapp
 
   deploy:
     runs-on: windows-latest
@@ -45,6 +45,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: .net-app
+          path: myapp
       
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -52,5 +53,5 @@ jobs:
         with:
           app-name: 'aishwaryarahulmule-contact-App'
           slot-name: 'Production'
-          package: .
+          package: myapp
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_84451699572A42EBAE5A6126D04AA9AA }}
