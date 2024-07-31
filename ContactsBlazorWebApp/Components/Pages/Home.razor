@@ -23,19 +23,18 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach(var contact in contacts)
+		@foreach (var contact in contacts)
 		{
-			var localval = contact;
 			<tr>
 				<td>@contact.Name</td>
 				<td>@contact.Email</td>
 				<td>@contact.Phone</td>
 				<td>@contact.DateOfBirth</td>
 				<td>
-					<button type="button">Edit</button>
+					<button type="button" @onclick='()=>_nav.NavigateTo($"/editcontact/{contact.Id}")'>Edit Contact</button>
 				</td>
 				<td>
-					<button type="button" @onclick="(async () => await DeleteContactasync(contact))">Delete</button>
+					<button type="button" @onclick="(async () => await DeleteContactasync(contact))">Remove Contact</button>
 				</td>
 			</tr>
 		}

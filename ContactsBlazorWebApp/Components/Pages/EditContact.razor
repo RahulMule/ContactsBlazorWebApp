@@ -1,0 +1,54 @@
+﻿@page "/editcontact/{id:int}"
+@using ContactsBlazorWebApp.Services
+@inject ContactsRepository repo
+@inject NavigationManager nav
+
+<h3>EditContact</h3>
+
+<EditForm
+	Model="@contact"
+	FormName="Editcontact"
+	OnValidSubmit="handlesubmit">
+		  <div class="mb-3">
+			  <label for="Id" class="form-label">Name</label>
+			  <InputText id="Id" @bind-Value="contact.Name" class="form-control"></InputText>
+		  </div>
+		  <div class="mb-3">
+		<label for="Id" class="form-label">Email</label>
+		<InputText id="Id" @bind-Value="contact.Email" class="form-control"></InputText>
+		  </div>
+		  <div class="mb-3">
+			  <label for="Id" class="form-label">Phone</label>
+			  <InputText id="Id" @bind-Value="contact.Phone" class="form-control"></InputText>
+		  </div>
+		<div class="mb-3">
+			<label for="Id" class="form-label">Date of Birth</label>
+			<InputDate id="Id" @bind-Value="contact.DateOfBirth" class="form-control"></InputDate>
+		</div>
+		<button type="submit" class="btn btn-primary">Update Contact</button>
+		<a role="button" class="btn btn-secondary" href="/">Cancel</a>
+
+</EditForm>
+
+@code {
+	[Parameter]
+	public int Id { get; set; }
+
+	[SupplyParameterFromForm]
+	public ContactDetail? contact { get; set; }
+
+	protected override async Task OnParametersSetAsync()
+	{
+
+
+		contact = repo.GetContactDetailsbyID(Id);
+		//contact.Id = Id;
+
+
+	}
+	public async Task handlesubmit(){
+		repo.UpdateContactDetails(contact);
+		nav.NavigateTo("/");
+	}
+
+}

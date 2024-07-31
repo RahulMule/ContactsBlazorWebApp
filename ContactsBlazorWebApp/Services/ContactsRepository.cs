@@ -32,6 +32,15 @@ namespace ContactsBlazorWebApp.Services
             await _context.ContactDetails.AddAsync(con);
             _context.SaveChanges();
         }
-        
-    }
+		public ContactDetail GetContactDetailsbyID(int id)
+		{
+            return _context.ContactDetails.Find(id);
+		}
+		public void UpdateContactDetails(ContactDetail contact)
+		{
+			_context.ContactDetails.Update(contact);
+            _context.SaveChanges(true);
+		}
+
+	}
 }
