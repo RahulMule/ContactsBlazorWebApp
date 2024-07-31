@@ -30,5 +30,5 @@ ContactsBlazorWebApp is a Blazor WebAssembly application built using .NET Core. 
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/yourusername/ContactsBlazorWebApp.git
+   git clone https://github.com/RahulMule/ContactsBlazorWebApp.git
    cd ContactsBlazorWebApp
